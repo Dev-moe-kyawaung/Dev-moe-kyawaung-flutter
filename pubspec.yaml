@@ -12,11 +12,14 @@ dependencies:
   url_launcher: ^6.3.0
   flutter_svg: ^2.0.10
   google_fonts: ^6.2.1
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+  build_runner: ^2.4.14
+  json_serializable: ^6.9.3
 
 flutter:
   uses-material-design: true
