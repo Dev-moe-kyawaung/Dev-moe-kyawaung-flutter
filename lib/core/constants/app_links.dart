@@ -10,3 +10,16 @@ class AppLinks {
   static const paypal = 'https://www.paypal.com/paypalme/my/profile';
   static const web = 'https://moekyawaung.github.io/';
 }
+import '../data/data_sources/portfolio_data_source.dart';
+
+class AppLinks {
+  static const github = 'https://github.com/Dev-moe-kyawaung';
+  static const gravatar = 'https://gravatar.com/moekyawaung2026';
+  static const youtube = 'https://www.youtube.com/channel/UCuTXUguZb4xjeL2nX8WJG';
+  static const linkedin = 'https://www.linkedin.com/in/moe-kyaw-aung-2653093a1';
+
+  static List projects = PortfolioDataSource.projects;
+  static List services = PortfolioDataSource.services;
+  static List apps = PortfolioDataSource.apps;
+  static List socialLinks = PortfolioDataSource.socialLinks;
+}
