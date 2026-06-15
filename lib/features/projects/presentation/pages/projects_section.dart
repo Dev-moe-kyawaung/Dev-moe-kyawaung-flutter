@@ -149,3 +149,129 @@ class _SectionLabel extends StatelessWidget {
     );
   }
 }
+
+import 'package:flutter/material.dart';
+import '../../../../core/widgets/cyber_frame.dart';
+import '../../../../core/services/launch_service.dart';
+import '../../../../data/data_sources/portfolio_data_source.dart';
+import '../../../../data/models/project_model.dart';
+import '../widgets/project_card.dart';
+
+class ProjectsSection extends StatefulWidget {
+  const ProjectsSection({super.key});
+
+  @override
+  State<ProjectsSection> createState() => _ProjectsSectionState();
+}
+
+class _ProjectsSectionState extends State<ProjectsSection>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _entrance = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 950),
+  )..forward();
+
+  @override
+  void dispose() {
+    _entrance.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final projects = PortfolioDataSource.projects;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
+      child: AnimatedBuilder(
+        animation: _entrance,
+        builder: (context, child) {
+          final t = Curves.easeOutCubic.transform(_entrance.value);
+          return Opacity(
+            opacity: t,
+            child: Transform.translate(
+              offset: Offset(0, 28 * (1 - t)),
+              child: child,
+            ),
+          );
+        },
+        child: CyberFrame(
+          child: Padding(
+            padding: const EdgeInsets.all(26),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const _SectionLabel(label: 'Projects'),
+                const SizedBox(height: 12),
+                const Text(
+                  'Projects',
+                  style: TextStyle(
+                    fontSize: 34,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.white,
+                    height: 1.1,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  'Selected work built to show senior-level product thinking, architecture, and visual polish.',
+                  style: TextStyle(
+                    color: Colors.white.withValues(alpha: 0.72),
+                    height: 1.6,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final wide = constraints.maxWidth > 1050;
+                    final itemWidth = wide
+                        ? (constraints.maxWidth - 32) / 3
+                        : constraints.maxWidth;
+
+                    return Wrap(
+                      spacing: 16,
+                      runSpacing: 16,
+                      children: projects
+                          .map(
+                            (p) => SizedBox(
+                              width: itemWidth,
+                              child: ProjectCard(
+                                title: p.title,
+                                description: p.description,
+                                tags: p.tags,
+                                demoUrl: p.demoUrl,
+                                sourceUrl: p.sourceUrl,
+                                onClickDemo: () => LaunchService.openUrl(p.demoUrl),
+                                onClickSource: () => LaunchService.openUrl(p.sourceUrl),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SectionLabel extends StatelessWidget {
+  final String label;
+  const _SectionLabel({required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      label.toUpperCase(),
+      style: const TextStyle(
+        color: Colors.pinkAccent,
+        fontWeight: FontWeight.w800,
+        letterSpacing: 2.0,
+      ),
+    );
+  }
+}
