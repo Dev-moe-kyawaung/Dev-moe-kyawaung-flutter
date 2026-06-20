@@ -1,0 +1,12 @@
+{
+  "name": "flutter_portfolio_starter",
+  "version": "1.0.0",
+  "description": "Minimal package.json for optional Node tooling in this Flutter project",
+  "private": true,
+  "scripts": {
+    "format": "prettier --write \"**/*.{md,json,js,ts}\""
+  },
+  "devDependencies": {
+    "prettier": "^2.8.8"
+  }
+}
